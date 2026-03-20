@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheet Example</title>
+<style>
+  /* Base Styles */
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 2rem;
+    overflow-x: hidden;
+  }
+
+  /* Overlay */
+  .sheet-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 50;
+  }
+  .sheet-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Sheet */
+  .sheet {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    max-width: 80%;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    transition: transform 0.3s ease;
+    z-index: 100;
+  }
+  .sheet.active {
+    transform: translateX(-100%);
+  }
+
+  /* Header/Footer */
+  .sheet-header,
+  .sheet-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sheet-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  /* Close Button */
+  .sheet-close {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  /* Content scrollable area */
+  .sheet-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+</style>
+</head>
+<body>
+
+<button id="open-sheet">Open Sheet</button>
+
+<div class="sheet-overlay" id="sheet-overlay"></div>
+
+<div class="sheet" id="sheet">
+  <div class="sheet-header">
+    <span>Sheet Title</span>
+    <button class="sheet-close" id="close-sheet">&times;</button>
+  </div>
+  <div class="sheet-content">
+    <p>This is the sheet content. You can place any HTML here.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod.</p>
+    <p>Scroll down to see more content inside the sheet.</p>
+  </div>
+  <div class="sheet-footer">
+    <button id="footer-action">Action</button>
+    <button id="footer-cancel">Cancel</button>
+  </div>
+</div>
+
+<script>
+  const sheet = document.getElementById("sheet");
+  const overlay = document.getElementById("sheet-overlay");
+  const openBtn = document.getElementById("open-sheet");
+  const closeBtn = document.getElementById("close-sheet");
+
+  function openSheet() {
+    sheet.classList.add("active");
+    overlay.classList.add("active");
+  }
+
+  function closeSheet() {
+    sheet.classList.remove("active");
+    overlay.classList.remove("active");
+  }
+
+  openBtn.addEventListener("click", openSheet);
+  closeBtn.addEventListener("click", closeSheet);
+  overlay.addEventListener("click", closeSheet);
+</script>
+
+</body>
+</html>
