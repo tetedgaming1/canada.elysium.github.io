@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nation Dashboard</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; background: #f9f9f9; }
+  header { background: #0070f3; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+  nav a { color: white; margin-left: 1rem; text-decoration: none; }
+  nav a.active { font-weight: bold; text-decoration: underline; }
+  main { padding: 2rem; }
+  .card { background: white; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div><strong>Nation Dashboard</strong></div>
+  <nav>
+    <a href="#/" class="nav-link">Dashboard</a>
+    <a href="#/towns" class="nav-link">Towns</a>
+    <a href="#/citizens" class="nav-link">Citizens</a>
+    <a href="#/diplomacy" class="nav-link">Diplomacy</a>
+    <a href="#/treasury" class="nav-link">Treasury</a>
+    <a href="#/laws" class="nav-link">Laws</a>
+    <a href="#/sync" class="nav-link">Sync</a>
+  </nav>
+</header>
+
+<main>
+  <div id="Dashboard" class="page card">Welcome to the Dashboard!</div>
+  <div id="Towns" class="page card hidden">Manage your towns here.</div>
+  <div id="Citizens" class="page card hidden">View and edit citizens.</div>
+  <div id="Diplomacy" class="page card hidden">Handle foreign relations.</div>
+  <div id="Treasury" class="page card hidden">View national finances.</div>
+  <div id="Laws" class="page card hidden">Manage laws and decrees.</div>
+  <div id="Sync" class="page card hidden">Sync Towny data here.</div>
+  <div id="NotFound" class="page card hidden">Page not found.</div>
+</main>
+
+<script>
+  const routes = {
+    "/": "Dashboard",
+    "/towns": "Towns",
+    "/citizens": "Citizens",
+    "/diplomacy": "Diplomacy",
+    "/treasury": "Treasury",
+    "/laws": "Laws",
+    "/sync": "Sync"
+  };
+
+  function showPage() {
+    const hash = location.hash.slice(1) || "/";
+    const pageId = routes[hash] || "NotFound";
+
+    document.querySelectorAll(".page").forEach(el => el.classList.add("hidden"));
+    document.getElementById(pageId).classList.remove("hidden");
+
+    document.querySelectorAll(".nav-link").forEach(link => link.classList.remove("active"));
+    const activeLink = document.querySelector(`a[href="#${hash}"]`);
+    if (activeLink) activeLink.classList.add("active");
+  }
+
+  window.addEventListener("hashchange", showPage);
+  window.addEventListener("load", showPage);
+</script>
+
+</body>
+</html>
