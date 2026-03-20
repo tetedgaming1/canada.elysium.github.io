@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vanilla Toggle Group</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 2rem;
+  }
+
+  .toggle-group {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .toggle-group-item {
+    padding: 0.5rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.375rem;
+    background-color: #f8fafc;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s;
+  }
+
+  .toggle-group-item:hover {
+    background-color: #e2e8f0;
+  }
+
+  .toggle-group-item.active {
+    background-color: #3b82f6;
+    color: white;
+    border-color: #2563eb;
+  }
+</style>
+</head>
+<body>
+
+<h2>Toggle Group Example</h2>
+
+<div class="toggle-group" data-type="single">
+  <div class="toggle-group-item" data-value="1">Option 1</div>
+  <div class="toggle-group-item" data-value="2">Option 2</div>
+  <div class="toggle-group-item" data-value="3">Option 3</div>
+</div>
+
+<div class="toggle-group" data-type="multiple" style="margin-top: 1rem;">
+  <div class="toggle-group-item" data-value="a">A</div>
+  <div class="toggle-group-item" data-value="b">B</div>
+  <div class="toggle-group-item" data-value="c">C</div>
+</div>
+
+<script>
+  document.querySelectorAll('.toggle-group').forEach(group => {
+    const type = group.dataset.type || 'single'; // single or multiple
+    group.addEventListener('click', event => {
+      const item = event.target.closest('.toggle-group-item');
+      if (!item) return;
+
+      if (type === 'single') {
+        group.querySelectorAll('.toggle-group-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      } else if (type === 'multiple') {
+        item.classList.toggle('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
