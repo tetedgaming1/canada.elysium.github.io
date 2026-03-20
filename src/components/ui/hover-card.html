@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Static HoverCard</title>
+<style>
+  body { font-family: sans-serif; margin: 2rem; }
+  .hovercard-wrapper { display: inline-block; position: relative; }
+
+  .hovercard-content {
+    display: none;
+    position: absolute;
+    width: 16rem; /* 64 */
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 50;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  .hovercard-wrapper:hover .hovercard-content {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Align options: center (default) */
+  .hovercard-content.align-center { left: 50%; transform: translateX(-50%) scale(1); }
+
+  /* Optional side offsets for JS adjustments */
+</style>
+</head>
+<body>
+
+<div class="hovercard-wrapper">
+  <button class="hovercard-trigger">Hover over me</button>
+  <div class="hovercard-content align-center">
+    <strong>HoverCard Title</strong>
+    <p>This is the content of the HoverCard. It appears when hovering the trigger.</p>
+  </div>
+</div>
+
+</body>
+</html>
