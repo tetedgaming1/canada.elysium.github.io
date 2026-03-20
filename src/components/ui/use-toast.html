@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toast Example</title>
+  <style>
+    /* Toast container */
+    #toast-container {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 9999;
+      max-width: 300px;
+    }
+
+    /* Toast */
+    .toast {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 0.375rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: slideIn 0.3s forwards;
+      font-family: sans-serif;
+      position: relative;
+    }
+
+    .toast.hide {
+      animation: slideOut 0.3s forwards;
+    }
+
+    .toast strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .toast button.close {
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      color: #555;
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideOut {
+      to {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast-container"></div>
+
+  <button onclick="showToast('Hello!', 'This is a toast message.')">
+    Show Toast
+  </button>
+
+  <script>
+    const TOAST_REMOVE_DELAY = 5000; // 5 seconds
+    const toastContainer = document.getElementById('toast-container');
+
+    function showToast(title, description) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+
+      const content = document.createElement('div');
+      if (title) {
+        const strong = document.createElement('strong');
+        strong.textContent = title;
+        content.appendChild(strong);
+      }
+      if (description) {
+        const desc = document.createElement('span');
+        desc.textContent = description;
+        content.appendChild(desc);
+      }
+
+      const closeBtn = document.createElement('button');
+      closeBtn.textContent = '×';
+      closeBtn.className = 'close';
+      closeBtn.onclick = () => dismissToast(toast);
+
+      toast.appendChild(content);
+      toast.appendChild(closeBtn);
+
+      toastContainer.appendChild(toast);
+
+      const timeout = setTimeout(() => dismissToast(toast), TOAST_REMOVE_DELAY);
+
+      // store timeout so we can clear it if dismissed manually
+      toast.dataset.timeout = timeout;
+    }
+
+    function dismissToast(toast) {
+      const timeout = toast.dataset.timeout;
+      if (timeout) clearTimeout(timeout);
+      toast.classList.add('hide');
+      toast.addEventListener('animationend', () => {
+        toast.remove();
+      });
+    }
+  </script>
+
+</body>
+</html>
