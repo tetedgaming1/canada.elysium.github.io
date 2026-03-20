@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Detection Example</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f0f0f0;
+    }
+    .status {
+      padding: 1rem 2rem;
+      background: #fff;
+      border-radius: 0.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      font-size: 1.25rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="mobile-status">Checking...</div>
+
+  <script>
+    const MOBILE_BREAKPOINT = 768;
+    const statusEl = document.getElementById('mobile-status');
+
+    function checkIsMobile() {
+      const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+      statusEl.textContent = isMobile
+        ? 'You are on a mobile device 📱'
+        : 'You are on a desktop device 💻';
+      return isMobile;
+    }
+
+    // Initial check
+    checkIsMobile();
+
+    // Listen for resize events
+    window.addEventListener('resize', checkIsMobile);
+  </script>
+</body>
+</html>
