@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radio Group</title>
+<style>
+  .radio-group {
+    display: grid;
+    gap: 0.5rem; /* same as gap-2 */
+  }
+
+  .radio-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 1rem; /* h-4 */
+    width: 1rem;  /* w-4 */
+    border: 2px solid #3b82f6; /* border-primary */
+    border-radius: 9999px; /* rounded-full */
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.2s;
+  }
+
+  .radio-item:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* focus ring */
+  }
+
+  .radio-item input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .radio-indicator {
+    display: none;
+    height: 0.875rem; /* h-3.5 */
+    width: 0.875rem;  /* w-3.5 */
+    background-color: #3b82f6; /* fill-primary */
+    border-radius: 50%;
+  }
+
+  .radio-item input:checked + .radio-indicator {
+    display: block;
+  }
+
+  /* Optional: disabled style */
+  .radio-item input:disabled + .radio-indicator {
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<form class="radio-group">
+  <!-- Radio 1 -->
+  <label class="radio-item">
+    <input type="radio" name="example" value="1" checked>
+    <span class="radio-indicator"></span>
+  </label>
+
+  <!-- Radio 2 -->
+  <label class="radio-item">
+    <input type="radio" name="example" value="2">
+    <span class="radio-indicator"></span>
+  </label>
+
+  <!-- Radio 3 -->
+  <label class="radio-item">
+    <input type="radio" name="example" value="3" disabled>
+    <span class="radio-indicator"></span>
+  </label>
+</form>
+
+</body>
+</html>
