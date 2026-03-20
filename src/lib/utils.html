@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CN & isIframe Demo</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- clsx CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/clsx@1.2.1/dist/clsx.min.js"></script>
+  <!-- tailwind-merge CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/tailwind-merge@1.14.0/dist/index.umd.js"></script>
+</head>
+<body class="p-6">
+
+  <div id="demo" class="p-4 rounded-lg"></div>
+
+  <script>
+    // Browser-safe cn function
+    function cn(...inputs) {
+      // clsx is global from CDN
+      // tailwindMerge is global from CDN as tailwindMerge
+      return tailwindMerge(clsx(...inputs));
+    }
+
+    // Check if current window is inside an iframe (safe)
+    const isIframe = window.self !== window.top;
+
+    // Demo usage
+    const demoDiv = document.getElementById('demo');
+    demoDiv.className = cn(
+      "bg-blue-100 text-blue-800",
+      isIframe ? "border-4 border-red-500" : "border-2 border-green-500"
+    );
+    demoDiv.textContent = "Hello! isIframe = " + isIframe;
+  </script>
+
+</body>
+</html>
