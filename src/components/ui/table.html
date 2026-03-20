@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Table</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 2rem;
+    background-color: #f9fafb;
+    color: #111827;
+  }
+
+  /* Table wrapper for overflow */
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db; /* gray border */
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem; /* text-sm */
+    caption-side: bottom;
+  }
+
+  /* Table header */
+  thead tr {
+    border-bottom: 1px solid #d1d5db;
+  }
+
+  th {
+    text-align: left;
+    font-weight: 500;
+    padding: 0.5rem 0.5rem;
+    vertical-align: middle;
+    color: #6b7280; /* muted foreground */
+  }
+
+  /* Table body rows */
+  tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s;
+  }
+
+  tbody tr:hover {
+    background-color: #f3f4f6; /* hover muted */
+  }
+
+  tbody tr.selected {
+    background-color: #e5e7eb; /* selected row */
+  }
+
+  td {
+    padding: 0.5rem 0.5rem;
+    vertical-align: middle;
+  }
+
+  /* Table footer */
+  tfoot {
+    border-top: 1px solid #d1d5db;
+    font-weight: 500;
+    background-color: #f9fafb;
+  }
+
+  caption {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #6b7280; /* muted foreground */
+  }
+</style>
+</head>
+<body>
+
+<h2>Example Table</h2>
+
+<div class="table-wrapper">
+  <table>
+    <caption>Users Table</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Alice Johnson</td>
+        <td>alice@example.com</td>
+        <td>Admin</td>
+        <td>Active</td>
+      </tr>
+      <tr class="selected">
+        <td>Bob Smith</td>
+        <td>bob@example.com</td>
+        <td>User</td>
+        <td>Inactive</td>
+      </tr>
+      <tr>
+        <td>Carol Williams</td>
+        <td>carol@example.com</td>
+        <td>Moderator</td>
+        <td>Active</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">Total Users: 3</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+</body>
+</html>
