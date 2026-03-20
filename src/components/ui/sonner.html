@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toaster Example</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background: #f9fafb;
+    color: #111827;
+  }
+
+  /* Toaster container */
+  .toaster {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 9999;
+  }
+
+  /* Toast */
+  .toast {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-width: 250px;
+    max-width: 400px;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    color: #111827;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: slide-in 0.3s ease forwards;
+    font-size: 0.875rem;
+    position: relative;
+  }
+
+  .toast.success { border-color: #34d399; background-color: #dcfce7; color: #065f46; }
+  .toast.error { border-color: #f87171; background-color: #fee2e2; color: #b91c1c; }
+
+  /* Toast description */
+  .toast-description { flex: 1; }
+
+  /* Toast buttons */
+  .toast-button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+
+  .toast-button.cancel {
+    background: #d1d5db;
+    color: #374151;
+  }
+
+  @keyframes slide-in {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  @keyframes slide-out {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<button onclick="showToast('Hello! This is a success message', 'success')">Show Success Toast</button>
+<button onclick="showToast('Oops! Something went wrong', 'error')">Show Error Toast</button>
+
+<div class="toaster" id="toaster"></div>
+
+<script>
+  const toaster = document.getElementById('toaster');
+
+  function showToast(message, type = 'success', duration = 4000) {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+      <span class="toast-description">${message}</span>
+      <button class="toast-button" onclick="closeToast(this)">Ok</button>
+    `;
+
+    toaster.appendChild(toast);
+
+    // Auto remove after duration
+    setTimeout(() => {
+      closeToast(toast);
+    }, duration);
+  }
+
+  function closeToast(el) {
+    const toast = el.closest ? el : el.closest('.toast');
+    if (!toast) return;
+    toast.style.animation = 'slide-out 0.3s ease forwards';
+    toast.addEventListener('animationend', () => toast.remove());
+  }
+</script>
+
+</body>
+</html>
