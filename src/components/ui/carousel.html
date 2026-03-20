@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Static Carousel</title>
+<style>
+  body {
+    font-family: sans-serif;
+  }
+  .carousel-container {
+    position: relative;
+    width: 90%;
+    margin: 2rem auto;
+    overflow: hidden;
+  }
+  .carousel-track {
+    display: flex;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .carousel-item {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    background: #f3f4f6;
+    margin-right: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+  }
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .prev-button {
+    left: -2.5rem;
+  }
+  .next-button {
+    right: -2.5rem;
+  }
+  .carousel-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+</style>
+</head>
+<body>
+
+<div class="carousel-container" id="carousel">
+  <button class="carousel-button prev-button" id="prevBtn">&#8592;</button>
+  <div class="carousel-track" id="carouselTrack">
+    <div class="carousel-item">Slide 1</div>
+    <div class="carousel-item">Slide 2</div>
+    <div class="carousel-item">Slide 3</div>
+    <div class="carousel-item">Slide 4</div>
+  </div>
+  <button class="carousel-button next-button" id="nextBtn">&#8594;</button>
+</div>
+
+<script>
+  const track = document.getElementById('carouselTrack');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const items = track.children;
+  let index = 0;
+
+  function updateButtons() {
+    prevBtn.disabled = index <= 0;
+    nextBtn.disabled = index >= items.length - 1;
+  }
+
+  function scrollToIndex(i) {
+    if(i < 0) i = 0;
+    if(i >= items.length) i = items.length - 1;
+    index = i;
+    items[index].scrollIntoView({ behavior: 'smooth', inline: 'start' });
+    updateButtons();
+  }
+
+  prevBtn.addEventListener('click', () => scrollToIndex(index - 1));
+  nextBtn.addEventListener('click', () => scrollToIndex(index + 1));
+
+  // Optional: handle arrow keys
+  track.addEventListener('keydown', e => {
+    if(e.key === 'ArrowLeft') scrollToIndex(index - 1);
+    if(e.key === 'ArrowRight') scrollToIndex(index + 1);
+  });
+
+  // Initialize
+  updateButtons();
+</script>
+
+</body>
+</html>
