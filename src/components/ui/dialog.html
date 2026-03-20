@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Static Dialog</title>
+<style>
+  body { font-family: sans-serif; }
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .overlay.active { display: block; opacity: 1; }
+
+  .dialog {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    z-index: 60;
+    display: none;
+    transition: all 0.2s ease-out;
+  }
+  .dialog.active { display: block; transform: translate(-50%, -50%) scale(1); }
+
+  .dialog-header { display: flex; flex-direction: column; gap: 0.375rem; text-align: center; }
+  .dialog-footer { display: flex; flex-direction: column-reverse; gap: 0.5rem; margin-top: 1rem; }
+  @media(min-width: 640px) { .dialog-footer { flex-direction: row; justify-content: flex-end; } }
+
+  .dialog-title { font-size: 1.125rem; font-weight: 600; line-height: 1.25; }
+  .dialog-description { font-size: 0.875rem; color: #6b7280; }
+
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .close-btn:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<button id="openDialogBtn">Open Dialog</button>
+
+<div class="overlay" id="dialogOverlay"></div>
+
+<div class="dialog" id="dialog">
+  <button class="close-btn" id="dialogClose" aria-label="Close">✕</button>
+  <div class="dialog-header">
+    <h2 class="dialog-title">Dialog Title</h2>
+    <p class="dialog-description">This is the dialog description.</p>
+  </div>
+  <div class="dialog-content">
+    <p>Dialog content goes here. You can place any HTML inside.</p>
+  </div>
+  <div class="dialog-footer">
+    <button id="cancelBtn">Cancel</button>
+    <button id="confirmBtn">Confirm</button>
+  </div>
+</div>
+
+<script>
+  const openBtn = document.getElementById('openDialogBtn');
+  const dialog = document.getElementById('dialog');
+  const overlay = document.getElementById('dialogOverlay');
+  const closeBtn = document.getElementById('dialogClose');
+
+  function openDialog() {
+    dialog.classList.add('active');
+    overlay.classList.add('active');
+  }
+  function closeDialog() {
+    dialog.classList.remove('active');
+    overlay.classList.remove('active');
+  }
+
+  openBtn.addEventListener('click', openDialog);
+  closeBtn.addEventListener('click', closeDialog);
+  overlay.addEventListener('click', closeDialog);
+
+  // Optional: close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') closeDialog();
+  });
+</script>
+
+</body>
+</html>
