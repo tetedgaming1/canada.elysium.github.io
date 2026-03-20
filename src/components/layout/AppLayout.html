@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>App Layout</title>
+  <style>
+    /* Base styles */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a; /* matches bg-background */
+      color: white;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px; /* hidden by default */
+      width: 250px;
+      height: 100%;
+      background: #1e293b;
+      transition: left 0.3s;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 20;
+    }
+
+    #sidebar.open {
+      left: 0;
+    }
+
+    /* Sidebar toggle button (mobile) */
+    #mobile-header {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(4px);
+      border-bottom: 1px solid #334155;
+      padding: 10px 20px;
+      z-index: 30;
+    }
+
+    #mobile-header button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Main content */
+    main {
+      margin-left: 0;
+      padding: 80px 20px 20px 20px;
+      transition: margin-left 0.3s;
+    }
+
+    /* Large screen sidebar */
+    @media (min-width: 1024px) {
+      #sidebar {
+        left: 0;
+      }
+      #mobile-header {
+        display: none;
+      }
+      main {
+        margin-left: 250px;
+        padding-top: 20px;
+      }
+    }
+
+    /* Card container example */
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <h2>Sidebar</h2>
+    <ul>
+      <li><a href="#" style="color:white;">Home</a></li>
+      <li><a href="#" style="color:white;">Settings</a></li>
+      <li><a href="#" style="color:white;">Profile</a></li>
+    </ul>
+  </div>
+
+  <!-- Mobile header -->
+  <div id="mobile-header">
+    <button id="menu-btn">☰</button>
+  </div>
+
+  <!-- Main content -->
+  <main>
+    <div class="card">
+      <h3>Welcome!</h3>
+      <p>This is your main content area.</p>
+    </div>
+    <div class="card">
+      <h3>Another Card</h3>
+      <p>More content here.</p>
+    </div>
+  </main>
+
+  <script>
+    // Sidebar toggle logic
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menu-btn');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Close sidebar when clicking outside (mobile)
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target) && window.innerWidth < 1024) {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+
+</body>
+</html>
