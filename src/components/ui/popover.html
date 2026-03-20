@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Popover HTML</title>
+<style>
+  body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 5rem;
+  }
+
+  /* Trigger button */
+  .popover-trigger {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  /* Popover content */
+  .popover-content {
+    position: absolute;
+    top: 100%; /* below trigger */
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0.5rem;
+    width: 18rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  /* Show popover */
+  .popover-open .popover-content {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="popover">
+  <button class="popover-trigger">Open Popover</button>
+  <div class="popover-content">
+    <p>This is the popover content. You can put any HTML inside.</p>
+    <ul>
+      <li>Option 1</li>
+      <li>Option 2</li>
+      <li>Option 3</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const popover = document.querySelector('.popover');
+  const trigger = popover.querySelector('.popover-trigger');
+
+  trigger.addEventListener('click', () => {
+    popover.classList.toggle('popover-open');
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!popover.contains(e.target)) {
+      popover.classList.remove('popover-open');
+    }
+  });
+</script>
+
+</body>
+</html>
