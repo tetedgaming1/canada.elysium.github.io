@@ -1,100 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Town Form</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
+{
+  "name": "Town",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the town"
+    },
+    "mayor": {
+      "type": "string",
+      "description": "Minecraft username of the mayor"
+    },
+    "population": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of residents"
+    },
+    "chunks_claimed": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of chunks claimed"
+    },
+    "balance": {
+      "type": "number",
+      "default": 0,
+      "description": "Town treasury balance"
+    },
+    "tax_rate": {
+      "type": "number",
+      "default": 0,
+      "description": "Daily tax rate per resident"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "capital"
+      ],
+      "default": "active"
+    },
+    "coordinates": {
+      "type": "string",
+      "description": "Town spawn coordinates (x, y, z)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Town description or motto"
     }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-    pre {
-      background: #f4f4f4;
-      padding: 10px;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Town Form</h1>
-  <form id="townForm">
-    <label for="name">Town Name *</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="mayor">Mayor *</label>
-    <input type="text" id="mayor" name="mayor" required>
-
-    <label for="population">Population</label>
-    <input type="number" id="population" name="population" value="0">
-
-    <label for="chunks_claimed">Chunks Claimed</label>
-    <input type="number" id="chunks_claimed" name="chunks_claimed" value="0">
-
-    <label for="balance">Balance</label>
-    <input type="number" id="balance" name="balance" value="0">
-
-    <label for="tax_rate">Tax Rate</label>
-    <input type="number" id="tax_rate" name="tax_rate" value="0">
-
-    <label for="status">Status</label>
-    <select id="status" name="status">
-      <option value="active" selected>Active</option>
-      <option value="inactive">Inactive</option>
-      <option value="capital">Capital</option>
-    </select>
-
-    <label for="coordinates">Coordinates</label>
-    <input type="text" id="coordinates" name="coordinates" placeholder="x, y, z">
-
-    <label for="description">Description</label>
-    <textarea id="description" name="description" rows="4"></textarea>
-
-    <button type="submit">Save Town</button>
-  </form>
-
-  <h2>Saved Data:</h2>
-  <pre id="output">{}</pre>
-
-  <script>
-    const form = document.getElementById('townForm');
-    const output = document.getElementById('output');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const town = {
-        name: form.name.value.trim(),
-        mayor: form.mayor.value.trim(),
-        population: Number(form.population.value),
-        chunks_claimed: Number(form.chunks_claimed.value),
-        balance: Number(form.balance.value),
-        tax_rate: Number(form.tax_rate.value),
-        status: form.status.value,
-        coordinates: form.coordinates.value.trim(),
-        description: form.description.value.trim()
-      };
-
-      output.textContent = JSON.stringify(town, null, 2);
-    });
-  </script>
-</body>
-</html>
+  },
+  "required": [
+    "name",
+    "mayor"
+  ]
+}
