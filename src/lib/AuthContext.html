@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth Example</title>
+</head>
+<body>
+  <pre id="output">Loading...</pre>
+  <button id="loginBtn">Login</button>
+  <button id="logoutBtn">Logout</button>
+
+  <script>
+    // --- App Params (replace with your defaults if needed) ---
+    const appParams = {
+      appId: 'YOUR_APP_ID',
+      token: null, // Replace with logic to get token from URL/localStorage if needed
+      fromUrl: window.location.href,
+      functionsVersion: '1.0.0',
+      appBaseUrl: window.location.origin
+    };
+
+    // --- Auth state ---
+    const authState = {
+      user: null,
+      isAuthenticated: false,
+      isLoadingAuth: true,
+      isLoadingPublicSettings: true,
+      authError: null,
+      appPublicSettings: null
+    };
+
+    const output = document.getElementById('output');
+
+    function updateUI() {
+      output.textContent = JSON.stringify(authState, null, 2);
+    }
+
+    // --- Fetch wrapper for app public settings ---
+    async function fetchAppPublicSettings() {
+      authState.isLoadingPublicSettings = true;
+      updateUI();
+      try {
+        const res = await fetch(`/api/apps/public/prod/public-settings/by-id/${appParams.appId}`, {
+          headers: {
+            'X-App-Id': appParams.appId,
+            'Authorization': appParams.token ? `Bearer ${appParams.token}` : ''
+          }
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          const reason = data.extra_data?.reason || 'unknown';
+          authState.authError = { type: reason, message: data.message || 'Error fetching app settings' };
+          authState.isLoadingPublicSettings = false;
+          authState.isLoadingAuth = false;
+          updateUI();
+          return null;
+        }
+
+        const publicSettings = await res.json();
+        authState.appPublicSettings = publicSettings;
+        authState.isLoadingPublicSettings = false;
+        updateUI();
+        return publicSettings;
+      } catch (err) {
+        console.error(err);
+        authState.authError = { type: 'unknown', message: err.message || 'Unexpected error' };
+        authState.isLoadingPublicSettings = false;
+        authState.isLoadingAuth = false;
+        updateUI();
+        return null;
+      }
+    }
+
+    // --- Check user authentication ---
+    async function checkUserAuth() {
+      authState.isLoadingAuth = true;
+      updateUI();
+      try {
+        // Example: call a /me endpoint to get current user
+        const res = await fetch('/api/auth/me', {
+          headers: {
+            'Authorization': appParams.token ? `Bearer ${appParams.token}` : ''
+          }
+        });
+        if (!res.ok) throw res;
+        const user = await res.json();
+        authState.user = user;
+        authState.isAuthenticated = true;
+        authState.isLoadingAuth = false;
+        authState.authError = null;
+        updateUI();
+      } catch (err) {
+        authState.user = null;
+        authState.isAuthenticated = false;
+        authState.isLoadingAuth = false;
+        authState.authError = { type: 'auth_required', message: 'Authentication required' };
+        updateUI();
+      }
+    }
+
+    // --- Logout function ---
+    function logout(shouldRedirect = true) {
+      authState.user = null;
+      authState.isAuthenticated = false;
+      appParams.token = null;
+      updateUI();
+      if (shouldRedirect) {
+        // redirect to login page (replace with your auth URL)
+        window.location.href = '/login';
+      }
+    }
+
+    // --- Login redirect ---
+    function navigateToLogin() {
+      window.location.href = '/login?redirect=' + encodeURIComponent(window.location.href);
+    }
+
+    // --- Initialize auth state ---
+    async function initAuth() {
+      await fetchAppPublicSettings();
+      if (appParams.token) {
+        await checkUserAuth();
+      } else {
+        authState.isLoadingAuth = false;
+        authState.isAuthenticated = false;
+        updateUI();
+      }
+    }
+
+    // --- Event listeners for buttons ---
+    document.getElementById('loginBtn').addEventListener('click', navigateToLogin);
+    document.getElementById('logoutBtn').addEventListener('click', () => logout(true));
+
+    // --- Start ---
+    initAuth();
+  </script>
+</body>
+</html>
