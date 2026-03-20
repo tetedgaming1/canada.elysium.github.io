@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Page URL Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      margin-left: 0.5rem;
+    }
+    .output {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #0070f3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Create Page URL Demo</h1>
+  <p>Type a page name below to see the generated URL:</p>
+  <input type="text" id="pageName" placeholder="Enter page name" />
+  <button id="generateBtn">Generate URL</button>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    // Function to generate page URLs
+    function createPageUrl(pageName) {
+      return '/' + pageName.replace(/ /g, '-');
+    }
+
+    // DOM elements
+    const input = document.getElementById('pageName');
+    const btn = document.getElementById('generateBtn');
+    const output = document.getElementById('output');
+
+    // Button click handler
+    btn.addEventListener('click', () => {
+      const pageName = input.value.trim();
+      if (!pageName) {
+        output.textContent = 'Please enter a page name.';
+        return;
+      }
+      const url = createPageUrl(pageName);
+      output.textContent = `Generated URL: ${url}`;
+    });
+  </script>
+</body>
+</html>
