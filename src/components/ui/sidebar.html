@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vanilla Sidebar</title>
+<style>
+  body { margin: 0; font-family: sans-serif; }
+  :root {
+    --sidebar-width: 16rem;
+    --sidebar-width-icon: 3rem;
+    --sidebar-bg: #1e1e2e;
+    --sidebar-fg: #ffffff;
+    --sidebar-accent: #4f46e5;
+    --sidebar-accent-fg: #fff;
+  }
+
+  /* Sidebar Overlay (mobile) */
+  .sidebar-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 50;
+  }
+  .sidebar-overlay.active { display: block; }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-fg);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, width 0.3s ease;
+    overflow: hidden;
+    z-index: 100;
+  }
+  .sidebar.collapsed { width: var(--sidebar-width-icon); }
+
+  /* Sidebar header/footer */
+  .sidebar-header, .sidebar-footer {
+    padding: 1rem;
+    font-weight: bold;
+  }
+
+  /* Sidebar content */
+  .sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Sidebar buttons */
+  .sidebar-toggle {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin: 0.5rem;
+  }
+
+  /* Menu items */
+  .menu-item {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+  .menu-item:hover { background: var(--sidebar-accent); color: var(--sidebar-accent-fg); }
+
+  /* Submenus */
+  .submenu {
+    padding-left: 1rem;
+    display: none;
+    flex-direction: column;
+  }
+  .menu-item.active + .submenu { display: flex; }
+
+  /* Content area */
+  .main {
+    margin-left: var(--sidebar-width);
+    padding: 1rem;
+    transition: margin-left 0.3s ease;
+  }
+  .sidebar.collapsed ~ .main { margin-left: var(--sidebar-width-icon); }
+</style>
+</head>
+<body>
+
+<!-- Sidebar overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <button class="sidebar-toggle" id="toggleSidebar">&#9776;</button>
+    Sidebar
+  </div>
+  <div class="sidebar-content">
+    <div class="menu-item" data-submenu="menu1">Menu 1</div>
+    <div class="submenu" id="menu1">
+      <div class="menu-item">Submenu 1-1</div>
+      <div class="menu-item">Submenu 1-2</div>
+    </div>
+    <div class="menu-item" data-submenu="menu2">Menu 2</div>
+    <div class="submenu" id="menu2">
+      <div class="menu-item">Submenu 2-1</div>
+      <div class="menu-item">Submenu 2-2</div>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    Footer
+  </div>
+</div>
+
+<!-- Main content -->
+<div class="main">
+  <h1>Main Content</h1>
+  <p>This is the main content area. The sidebar can collapse/expand.</p>
+</div>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const toggleBtn = document.getElementById('toggleSidebar');
+
+  // Toggle sidebar collapsed/expanded
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+  });
+
+  // Handle submenu toggle
+  document.querySelectorAll('.menu-item[data-submenu]').forEach(item => {
+    item.addEventListener('click', () => {
+      const submenu = document.getElementById(item.dataset.submenu);
+      item.classList.toggle('active');
+    });
+  });
+
+  // Mobile overlay
+  toggleBtn.addEventListener('click', () => {
+    overlay.classList.toggle('active');
+  });
+  overlay.addEventListener('click', () => {
+    overlay.classList.remove('active');
+  });
+
+  // Keyboard shortcut: Ctrl/Cmd + B
+  window.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+      sidebar.classList.toggle('collapsed');
+    }
+  });
+</script>
+
+</body>
+</html>
