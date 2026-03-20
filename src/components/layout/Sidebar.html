@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NationCraft Layout</title>
+  <style>
+    /* Base styles */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a; /* bg-background */
+      color: white;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px; /* hidden by default */
+      width: 250px;
+      height: 100%;
+      background: #1e293b;
+      transition: left 0.3s;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 20;
+    }
+
+    #sidebar.open {
+      left: 0;
+    }
+
+    #sidebar h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #sidebar li {
+      margin-bottom: 10px;
+    }
+
+    #sidebar li a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    #sidebar li a:hover {
+      background: #334155;
+    }
+
+    /* Mobile header */
+    #mobile-header {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(4px);
+      border-bottom: 1px solid #334155;
+      padding: 10px 20px;
+      z-index: 30;
+    }
+
+    #mobile-header button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Main content */
+    main {
+      margin-left: 0;
+      padding: 80px 20px 20px 20px;
+      transition: margin-left 0.3s;
+    }
+
+    @media (min-width: 1024px) {
+      #sidebar {
+        left: 0;
+      }
+      #mobile-header {
+        display: none;
+      }
+      main {
+        margin-left: 250px;
+        padding-top: 20px;
+      }
+    }
+
+    /* Footer / server status */
+    .server-status {
+      margin-top: auto;
+      padding: 10px;
+      background: #334155;
+      border-radius: 8px;
+    }
+
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      background: #38bdf8; /* online color */
+      animation: pulse 1.5s infinite;
+      margin-right: 5px;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+    /* Cards for content */
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div>
+      <h2>🍁 Canada</h2>
+      <p style="font-size:12px; color:#94a3b8;">Management Dashboard</p>
+    </div>
+
+    <ul>
+      <li><a href="#"><span>📊</span> Dashboard</a></li>
+      <li><a href="#"><span>🏘️</span> Towns</a></li>
+      <li><a href="#"><span>👥</span> Citizens</a></li>
+      <li><a href="#"><span>🤝</span> Diplomacy</a></li>
+      <li><a href="#"><span>💰</span> Treasury</a></li>
+      <li><a href="#"><span>📜</span> Laws & Decrees</a></li>
+      <li><a href="#"><span>🔄</span> Towny Sync</a></li>
+    </ul>
+
+    <!-- Footer -->
+    <div class="server-status">
+      <span class="status-indicator"></span> Online
+    </div>
+  </div>
+
+  <!-- Mobile header -->
+  <div id="mobile-header">
+    <button id="menu-btn">☰</button>
+  </div>
+
+  <!-- Main content -->
+  <main>
+    <div class="card">
+      <h3>Welcome!</h3>
+      <p>This is your main content area.</p>
+    </div>
+    <div class="card">
+      <h3>Another Card</h3>
+      <p>More content here.</p>
+    </div>
+  </main>
+
+  <script>
+    // Sidebar toggle logic
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menu-btn');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Close sidebar when clicking outside (mobile)
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target) && window.innerWidth < 1024) {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+
+</body>
+</html>
