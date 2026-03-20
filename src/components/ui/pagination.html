@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base44 Pagination HTML</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    nav[aria-label="pagination"] {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    ul.pagination-list {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li.pagination-item {}
+
+    a.pagination-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #333;
+      font-size: 0.875rem;
+      transition: background-color 0.2s;
+    }
+
+    a.pagination-link:hover {
+      background-color: #eee;
+    }
+
+    a.pagination-link.active {
+      font-weight: bold;
+      background-color: #333;
+      color: white;
+      pointer-events: none;
+    }
+
+    span.pagination-ellipsis {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.75rem;
+      color: #999;
+    }
+
+    /* Arrows */
+    .arrow {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .pagination-link span {
+      margin: 0 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <nav role="navigation" aria-label="pagination">
+    <ul class="pagination-list">
+      <!-- Previous -->
+      <li class="pagination-item">
+        <a href="#" aria-label="Go to previous page" class="pagination-link">
+          <!-- Left arrow SVG -->
+          <svg class="arrow" viewBox="0 0 24 24">
+            <polyline points="15 6 9 12 15 18"></polyline>
+          </svg>
+          <span>Previous</span>
+        </a>
+      </li>
+
+      <!-- Page links -->
+      <li class="pagination-item"><a href="#" class="pagination-link">1</a></li>
+      <li class="pagination-item"><a href="#" class="pagination-link">2</a></li>
+      <li class="pagination-item"><a href="#" class="pagination-link">3</a></li>
+
+      <!-- Ellipsis -->
+      <li class="pagination-item">
+        <span class="pagination-ellipsis" aria-hidden="true">…</span>
+      </li>
+
+      <!-- Last pages -->
+      <li class="pagination-item"><a href="#" class="pagination-link">42</a></li>
+      <li class="pagination-item"><a href="#" class="pagination-link">43</a></li>
+      <li class="pagination-item"><a href="#" class="pagination-link active" aria-current="page">44</a></li>
+
+      <!-- Next -->
+      <li class="pagination-item">
+        <a href="#" aria-label="Go to next page" class="pagination-link">
+          <span>Next</span>
+          <!-- Right arrow SVG -->
+          <svg class="arrow" viewBox="0 0 24 24">
+            <polyline points="9 6 15 12 9 18"></polyline>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</body>
+</html>
