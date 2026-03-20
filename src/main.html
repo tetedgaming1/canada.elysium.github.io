@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My App</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Minimal reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background-color: hsl(0,10%,6%); color: hsl(0,0%,94%); padding: 2rem; }
+    h1 { font-family: 'Cinzel', serif; margin-bottom: 1rem; }
+    button { cursor: pointer; padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; background-color: hsl(0,75%,45%); color: hsl(0,0%,100%); }
+    input, select, textarea { padding: 0.5rem; border-radius: 0.5rem; border: 1px solid hsl(0,8%,18%); background-color: hsl(0,8%,18%); color: hsl(0,0%,94%); }
+    .card { background-color: hsl(0,8%,9%); padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid hsl(0,8%,18%); }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <h1>Welcome to My App</h1>
+    <div class="card">
+      <p>This is a card. Replace this with your content.</p>
+      <button onclick="alert('Button clicked!')">Click me</button>
+    </div>
+  </div>
+
+  <script>
+    // Example JS code to "simulate" React behavior
+    const root = document.getElementById('root');
+
+    function createCard(title, content) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const h2 = document.createElement('h2');
+      h2.textContent = title;
+      const p = document.createElement('p');
+      p.textContent = content;
+      card.appendChild(h2);
+      card.appendChild(p);
+      root.appendChild(card);
+    }
+
+    // Example usage
+    createCard('Card 1', 'This is the first card created with JS.');
+    createCard('Card 2', 'This is the second card.');
+  </script>
+</body>
+</html>
