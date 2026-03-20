@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button Variants Example</title>
+<style>
+  /* Base button */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: none;
+  }
+  .btn:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* Variant styles */
+  .btn.default { background-color: #3b82f6; color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+  .btn.default:hover { background-color: #2563eb; }
+
+  .btn.destructive { background-color: #ef4444; color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+  .btn.destructive:hover { background-color: #dc2626; }
+
+  .btn.outline { background-color: white; color: #111827; border: 1px solid #d1d5db; }
+  .btn.outline:hover { background-color: #f3f4f6; }
+
+  .btn.secondary { background-color: #6b7280; color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+  .btn.secondary:hover { background-color: #4b5563; }
+
+  .btn.ghost { background-color: transparent; color: #111827; }
+  .btn.ghost:hover { background-color: #f3f4f6; }
+
+  .btn.link { background-color: transparent; color: #3b82f6; text-decoration: underline; }
+  .btn.link:hover { text-decoration: underline; }
+
+  /* Size styles */
+  .btn.default-size { height: 2.25rem; padding: 0 1rem; }
+  .btn.sm { height: 2rem; padding: 0 0.75rem; font-size: 0.75rem; }
+  .btn.lg { height: 2.5rem; padding: 0 2rem; }
+  .btn.icon { height: 2.25rem; width: 2.25rem; padding: 0; justify-content: center; }
+</style>
+</head>
+<body>
+<h1>Button Variants Example</h1>
+
+<!-- Default -->
+<button class="btn default default-size">Default</button>
+<button class="btn destructive default-size">Destructive</button>
+<button class="btn outline default-size">Outline</button>
+<button class="btn secondary default-size">Secondary</button>
+<button class="btn ghost default-size">Ghost</button>
+<button class="btn link default-size">Link</button>
+
+<!-- Sizes -->
+<br><br>
+<button class="btn default sm">Small</button>
+<button class="btn default default-size">Default</button>
+<button class="btn default lg">Large</button>
+<button class="btn default icon">★</button>
+
+</body>
+</html>
