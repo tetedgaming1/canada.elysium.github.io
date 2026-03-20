@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Query Client</title>
+</head>
+<body>
+<script>
+  // Simple query client replacement
+  const queryCache = new Map();
+
+  function fetchQuery(key, fetchFn, options = {}) {
+    const { retry = 1, refetchOnWindowFocus = false } = options;
+
+    const attemptFetch = async (attempt = 0) => {
+      try {
+        const result = await fetchFn();
+        queryCache.set(key, result);
+        return result;
+      } catch (err) {
+        if (attempt < retry) {
+          return attemptFetch(attempt + 1);
+        } else {
+          throw err;
+        }
+      }
+    };
+
+    // Refetch on window focus if enabled
+    if (refetchOnWindowFocus) {
+      window.addEventListener('focus', () => attemptFetch());
+    }
+
+    // Return cached value if exists, else fetch
+    if (queryCache.has(key)) {
+      return Promise.resolve(queryCache.get(key));
+    } else {
+      return attemptFetch();
+    }
+  }
+
+  // Example usage:
+  fetchQuery('user', async () => {
+    const res = await fetch('/api/user');
+    if (!res.ok) throw new Error('Failed to fetch');
+    return res.json();
+  }, { retry: 1, refetchOnWindowFocus: false })
+  .then(data => console.log('User data:', data))
+  .catch(err => console.error('Error fetching user:', err));
+
+</script>
+</body>
+</html>
