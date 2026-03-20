@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nation Towns Dashboard</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script type="module">
+    import * as lucide from 'https://cdn.skypack.dev/lucide-react';
+    window.lucide = lucide;
+  </script>
+</head>
+<body class="bg-gray-50 p-6 font-sans">
+
+<div id="root"></div>
+
+<!-- React + ReactDOM CDN -->
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+<script type="text/javascript">
+  const { useState } = React;
+  const { Building2, Users, Coins, Crown, Plus, Pencil, Trash2, MapPin } = window.lucide;
+
+  function TownsApp() {
+    const [towns, setTowns] = useState([
+      { id: 1, name: 'Ironhaven', mayor: 'KingCraft_42', population: 24, chunks_claimed: 156, balance: 12500, status: 'capital', description: 'The capital town' },
+      { id: 2, name: 'Stormwatch', mayor: 'ThunderMC', population: 18, chunks_claimed: 95, balance: 8200, status: 'active', description: '' },
+    ]);
+
+    const statusColors = {
+      active: 'bg-blue-100 text-blue-800 border-blue-300',
+      inactive: 'bg-gray-100 text-gray-500 border-gray-300',
+      capital: 'bg-green-100 text-green-800 border-green-300',
+    };
+
+    return (
+      React.createElement('div', { className: 'space-y-6' },
+        React.createElement('h1', { className: 'text-3xl font-bold' }, 'Towns Dashboard'),
+
+        towns.length === 0
+        ? React.createElement('p', null, 'No towns yet.')
+        : React.createElement('div', { className: 'grid md:grid-cols-2 xl:grid-cols-3 gap-4' },
+            towns.map(town =>
+              React.createElement('div', { key: town.id, className: 'bg-white border rounded-lg p-5 shadow group' },
+                React.createElement('div', { className: 'flex items-start justify-between mb-3' },
+                  React.createElement('div', null,
+                    React.createElement('div', { className: 'flex items-center gap-2' },
+                      town.status === 'capital' && React.createElement(Crown, { className: 'w-4 h-4 text-green-700' }),
+                      React.createElement('h3', { className: 'font-semibold text-lg' }, town.name)
+                    ),
+                    React.createElement('span', { className: `text-xs px-2 py-0.5 rounded border ${statusColors[town.status]}` }, town.status)
+                  ),
+                  React.createElement('div', { className: 'flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity' },
+                    React.createElement('button', { className: 'h-8 w-8', onClick: () => alert('Edit ' + town.name) }, React.createElement(Pencil, { className: 'w-4 h-4' })),
+                    React.createElement('button', { className: 'h-8 w-8 text-red-500', onClick: () => alert('Delete ' + town.name) }, React.createElement(Trash2, { className: 'w-4 h-4' }))
+                  )
+                ),
+                React.createElement('div', { className: 'grid grid-cols-2 gap-3 text-sm' },
+                  React.createElement('div', { className: 'flex items-center gap-2 text-gray-500' }, React.createElement(Users, { className: 'w-4 h-4' }), `${town.population} residents`),
+                  React.createElement('div', { className: 'flex items-center gap-2 text-gray-500' }, React.createElement(Coins, { className: 'w-4 h-4' }), `${town.balance}g`),
+                  React.createElement('div', { className: 'flex items-center gap-2 text-gray-500' }, React.createElement(MapPin, { className: 'w-4 h-4' }), `${town.chunks_claimed} chunks`),
+                  React.createElement('div', { className: 'flex items-center gap-2 text-gray-500' }, React.createElement(Crown, { className: 'w-4 h-4' }), town.mayor)
+                )
+              )
+            )
+          )
+      )
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(TownsApp));
+</script>
+</body>
+</html>
