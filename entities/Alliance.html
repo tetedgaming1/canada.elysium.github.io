@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alliance Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Alliance Form</h1>
+  <form id="allianceForm">
+    <label for="nation_name">Nation Name *</label>
+    <input type="text" id="nation_name" name="nation_name" required>
+
+    <label for="relation">Relation *</label>
+    <select id="relation" name="relation" required>
+      <option value="ally">Ally</option>
+      <option value="enemy">Enemy</option>
+      <option value="neutral" selected>Neutral</option>
+      <option value="trade_partner">Trade Partner</option>
+      <option value="vassal">Vassal</option>
+      <option value="overlord">Overlord</option>
+    </select>
+
+    <label for="treaty_name">Treaty Name</label>
+    <input type="text" id="treaty_name" name="treaty_name">
+
+    <label for="details">Details</label>
+    <textarea id="details" name="details" rows="4"></textarea>
+
+    <label for="signed_date">Signed Date</label>
+    <input type="date" id="signed_date" name="signed_date">
+
+    <label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="active" selected>Active</option>
+      <option value="expired">Expired</option>
+      <option value="broken">Broken</option>
+    </select>
+
+    <button type="submit">Save Alliance</button>
+  </form>
+
+  <h2>Saved Data:</h2>
+  <pre id="output">{}</pre>
+
+  <script>
+    const form = document.getElementById('allianceForm');
+    const output = document.getElementById('output');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const alliance = {
+        nation_name: form.nation_name.value.trim(),
+        relation: form.relation.value,
+        treaty_name: form.treaty_name.value.trim(),
+        details: form.details.value.trim(),
+        signed_date: form.signed_date.value,
+        status: form.status.value
+      };
+
+      output.textContent = JSON.stringify(alliance, null, 2);
+    });
+  </script>
+</body>
+</html>
