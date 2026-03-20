@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skeleton Loader</title>
+<style>
+  /* Skeleton base style */
+  .skeleton {
+    background-color: rgba(79, 70, 229, 0.1); /* equivalent to bg-primary/10 */
+    border-radius: 0.375rem; /* rounded-md */
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  /* Skeleton pulse animation */
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  /* Optional sizes for demo */
+  .skeleton.text { height: 1rem; width: 8rem; margin: 0.5rem 0; }
+  .skeleton.icon { height: 2rem; width: 2rem; border-radius: 50%; }
+  .skeleton.block { height: 4rem; width: 100%; }
+</style>
+</head>
+<body>
+
+<h2>Skeleton Loader Demo</h2>
+
+<div class="skeleton text"></div>
+<div class="skeleton icon"></div>
+<div class="skeleton block"></div>
+
+</body>
+</html>
